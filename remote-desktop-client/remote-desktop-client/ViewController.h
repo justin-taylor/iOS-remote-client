@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Messenger.h"
-
+#import "SettingsView.h"
 
 #define TAP_TIMEOUT 0.2
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <SettingsViewDelegate>
 {
   // this view will contain the settings for configuring the socket ip and port
   // and other settings
-  UIView *_settingsView;
+  SettingsView *_settingsView;
   
   NSDate *_timeOfLastTouch;
     

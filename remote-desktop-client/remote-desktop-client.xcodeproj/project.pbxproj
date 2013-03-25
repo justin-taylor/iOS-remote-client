@@ -26,6 +26,8 @@
 		1422764B16FE129E00FEB296 /* remote_desktop_clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1422764A16FE129E00FEB296 /* remote_desktop_clientTests.m */; };
 		1422765616FE16EA00FEB296 /* SocketHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1422765516FE16EA00FEB296 /* SocketHandler.m */; };
 		1422765D16FE267900FEB296 /* Messenger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1422765C16FE267900FEB296 /* Messenger.m */; };
+		1422766016FF911500FEB296 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1422765F16FF911500FEB296 /* SettingsView.m */; };
+		1422766A16FFAB6200FEB296 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1422766C16FFAB6200FEB296 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,9 @@
 		1422765516FE16EA00FEB296 /* SocketHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocketHandler.m; path = Messenger/SocketHandler.m; sourceTree = "<group>"; };
 		1422765B16FE267900FEB296 /* Messenger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Messenger.h; path = Messenger/Messenger.h; sourceTree = "<group>"; };
 		1422765C16FE267900FEB296 /* Messenger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Messenger.m; path = Messenger/Messenger.m; sourceTree = "<group>"; };
+		1422765E16FF911500FEB296 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsView.h; path = UIElements/SettingsView.h; sourceTree = "<group>"; };
+		1422765F16FF911500FEB296 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsView.m; path = UIElements/SettingsView.m; sourceTree = "<group>"; };
+		1422766B16FFAB6200FEB296 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +130,8 @@
 		1422761C16FE129E00FEB296 /* remote-desktop-client */ = {
 			isa = PBXGroup;
 			children = (
+				1422766216FFA5FF00FEB296 /* Resources */,
+				1422766116FF911B00FEB296 /* UIElements */,
 				1422765716FE263900FEB296 /* Messenger */,
 				1422762516FE129E00FEB296 /* AppDelegate.h */,
 				1422762616FE129E00FEB296 /* AppDelegate.m */,
@@ -179,6 +186,23 @@
 				1422765C16FE267900FEB296 /* Messenger.m */,
 			);
 			name = Messenger;
+			sourceTree = "<group>";
+		};
+		1422766116FF911B00FEB296 /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				1422765E16FF911500FEB296 /* SettingsView.h */,
+				1422765F16FF911500FEB296 /* SettingsView.m */,
+			);
+			name = UIElements;
+			sourceTree = "<group>";
+		};
+		1422766216FFA5FF00FEB296 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1422766C16FFAB6200FEB296 /* Localizable.strings */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +282,7 @@
 				1422762D16FE129E00FEB296 /* Default-568h@2x.png in Resources */,
 				1422763016FE129E00FEB296 /* MainStoryboard_iPhone.storyboard in Resources */,
 				1422763316FE129E00FEB296 /* MainStoryboard_iPad.storyboard in Resources */,
+				1422766A16FFAB6200FEB296 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +322,7 @@
 				1422763616FE129E00FEB296 /* ViewController.m in Sources */,
 				1422765616FE16EA00FEB296 /* SocketHandler.m in Sources */,
 				1422765D16FE267900FEB296 /* Messenger.m in Sources */,
+				1422766016FF911500FEB296 /* SettingsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +375,14 @@
 				1422764716FE129E00FEB296 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1422766C16FFAB6200FEB296 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1422766B16FFAB6200FEB296 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

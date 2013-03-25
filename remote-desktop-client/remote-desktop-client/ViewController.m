@@ -8,16 +8,13 @@
 
 #import "ViewController.h"
 #import "SocketHandler.h"
+#import "SettingsView.h"
 
 
 //Private methods
 @interface ViewController ()
 
-- (void)_layoutViews;
-
 @end
-
-
 
 
 @implementation ViewController
@@ -25,25 +22,25 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
-  [self _layoutViews];
 
   _touchIsDown = false;
   _messenger = [Messenger new];
-  [_messenger setIpAddress:@"192.168.1.111"
-                      port:5444];
+  
+  _settingsView = [[SettingsView alloc] init];
+  [_settingsView setDelegate:self];
+  if([SettingsView hasSavedSettings])
+  {
+    [_settingsView loadSettingsFromUserDefaults];
+    [_settingsView setFrame:CGRectMake(-320, 0, 370, 550)];
+    [self settingsViewReceivedConnectAction:_settingsView];
+  }
+  else
+  {
+    [_settingsView setFrame:CGRectMake(0, 0, 370, 550)];
+  }
+  [self.view addSubview:_settingsView];
+  
 }
-
-
-
-/**
- Creates and lays out the views
- */
-- (void)_layoutViews
-{
-  //TODO
-}
-
 
 
 
@@ -156,6 +153,35 @@
   }
 }
 
+
+/*----------------------------------------------------------------------------*/
+#pragma mark -
+#pragma mark - SettingsViewDelegate
+/*----------------------------------------------------------------------------*/
+
+
+- (void)settingsViewReceivedConnectAction:(SettingsView *)view
+{
+  int port = [view.outgoingPortField.text intValue];
+  if([_messenger setIpAddress:view.ipAddressField.text port:port])
+  {
+    [_settingsView setVisible:false];
+  }
+  
+  else
+  {
+    UIAlertView *alert;
+    alert = [[UIAlertView alloc]
+             initWithTitle:NSLocalizedString(@"connection_alert_title", NULL)
+             message:NSLocalizedString(@"connection_alert_message", NULL)
+             delegate:NULL
+             cancelButtonTitle:NULL
+             otherButtonTitles:NSLocalizedString(@"connection_alert_confirm", NULL), nil];
+    [alert show];
+  }
+  
+  [view commitSettingsToUserDefaults];
+}
 
 
 

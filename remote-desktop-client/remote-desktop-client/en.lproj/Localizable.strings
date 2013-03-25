@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  remote-desktop-client
+
+  Created by Justin Taylor on 3/24/13.
+  Copyright (c) 2013 Tayloredapps. All rights reserved.
+*/
+"ip_address_placeholder" = "Ip Address";
+"out_port_placeholder" = "Port";
+"in_port_placeholder" = "Port";
+"fps_placeholder" = "FPS";
+"connect_button" = "Connect";
+"connection_alert_title" = "Connection Error";
+"connection_alert_message" = "A connection could not be made. Ensure the connection information is correct and try again";
+"connection_alert_confirm" = "OK";
