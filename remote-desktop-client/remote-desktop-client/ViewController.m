@@ -26,6 +26,7 @@
   _touchIsDown = false;
   _messenger = [Messenger new];
   
+  //setup the setting view
   _settingsView = [[SettingsView alloc] init];
   [_settingsView setDelegate:self];
   if([SettingsView hasSavedSettings])
@@ -38,8 +39,30 @@
   {
     [_settingsView setFrame:CGRectMake(0, 0, 370, 550)];
   }
+  
+  int width = 100;
+  //TODO do a better job of determining locaiton based on orientation
+  // also handle orientation changes
+  int x = self.view.frame.size.height - width;
+  CGRect frame = CGRectMake(x, 0, width, 50);
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [button setFrame:frame];
+  [button addTarget:self
+             action:@selector(keyboardAction:)
+   forControlEvents:UIControlEventTouchUpInside];
+  [button setTitle:NSLocalizedString(@"keyboard_button", NULL)
+          forState:UIControlStateNormal];
+  
+  [self.view addSubview:button];
   [self.view addSubview:_settingsView];
   
+  //create a text view to receive the keyboard strokes
+  _keyboardField = [UITextField new];
+  [_keyboardField setFrame:CGRectMake(-100, -100, 10, 10)];
+  [_keyboardField setDelegate:self];
+  
+  [self.view addSubview:_keyboardField];
+  [self.view setBackgroundColor:[UIColor blackColor]];
 }
 
 
@@ -48,6 +71,47 @@
 {
     [super didReceiveMemoryWarning];
 }
+
+
+
+
+/*----------------------------------------------------------------------------*/
+#pragma mark -
+#pragma mark - Keyboard Actions
+/*----------------------------------------------------------------------------*/
+
+- (BOOL)textField:(UITextField *)textField
+shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string
+{
+  if([string length] == 0)
+  {
+    NSLog(@"deleted a char");
+  }
+  else
+  {
+    NSLog(@"GOT SOMETHING %@", string);
+    
+    [_messenger sendKeyStroke:[string characterAtIndex:0]];
+  }
+
+  return true;
+}
+
+
+- (void)keyboardAction:(id)sender
+{
+  if([_keyboardField isFirstResponder])
+  {
+    [_keyboardField resignFirstResponder];
+  }
+  
+  else
+  {
+    [_keyboardField becomeFirstResponder];
+  }  
+}
+
 
 
 

@@ -105,7 +105,16 @@
     [button setTitle:NSLocalizedString(@"connect_button", @"Connected")
             forState:UIControlStateNormal];
     [self addSubview:button];
-
+    
+    
+    // create the background
+    yOffset += frame.size.height + padding;
+    UIView *background = [UIView new];
+    
+    [background setBackgroundColor:[UIColor whiteColor]];
+    [background setFrame:CGRectMake(0, 0, 320, yOffset + 20)];
+    [self addSubview:background];
+    [self sendSubviewToBack:background];
   }
   
   return self;

@@ -13,3 +13,4 @@
 "connection_alert_title" = "Connection Error";
 "connection_alert_message" = "A connection could not be made. Ensure the connection information is correct and try again";
 "connection_alert_confirm" = "OK";
+"keyboard_button" = "Keyboard";

@@ -100,8 +100,8 @@
 
 - (BOOL)sendKeyStroke:(char)key
 {
-  //TODO
-  return false;
+  NSString *msg = [NSString stringWithFormat:@"k%c", key];
+  return [self sendToSocket:msg];
 }
 
 

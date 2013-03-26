@@ -12,7 +12,8 @@
 
 #define TAP_TIMEOUT 0.2
 
-@interface ViewController : UIViewController <SettingsViewDelegate>
+@interface ViewController : UIViewController
+<SettingsViewDelegate, UITextFieldDelegate>
 {
   // this view will contain the settings for configuring the socket ip and port
   // and other settings
@@ -24,6 +25,8 @@
   
   CGPoint _lastMovePoint;
   BOOL _touchIsDown;
+  
+  UITextField *_keyboardField;
 }
 
 
