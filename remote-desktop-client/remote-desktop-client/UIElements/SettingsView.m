@@ -40,6 +40,11 @@
     frame = CGRectMake(padding, yOffset, 280, 23);
     self.sensitivitySlider = [UISlider new];
     [self.sensitivitySlider setFrame:frame];
+    [self.sensitivitySlider setContinuous:TRUE];
+    [self.sensitivitySlider setMaximumValue:5.0];
+    [self.sensitivitySlider addTarget:self
+                               action:@selector(sliderValueChanged:)
+                     forControlEvents:UIControlEventValueChanged];
     
     yOffset += frame.size.height + padding;
     frame = CGRectMake(padding, yOffset, 280, textViewHeight);
@@ -252,5 +257,17 @@
   [defaults synchronize];
 }
 
+
+/*----------------------------------------------------------------------------*/
+#pragma mark -
+#pragma mark - Slider did change
+/*----------------------------------------------------------------------------*/
+
+
+- (void)sliderValueChanged:(id)sender
+{
+  int val = self.sensitivitySlider.value;
+  [self.sensitivitySlider setValue:val];
+}
 
 @end

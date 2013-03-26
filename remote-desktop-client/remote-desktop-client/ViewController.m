@@ -157,8 +157,10 @@ replacementString:(NSString *)string
 
   if (touchCount == 1)
   {
-    int deltaX = point.x - _lastMovePoint.x;
-    int deltaY = point.y - _lastMovePoint.y;
+    int sensitivity = _settingsView.sensitivitySlider.value;
+    NSLog(@"SENSITIVITY %d", sensitivity);
+    int deltaX = (point.x - _lastMovePoint.x) * sensitivity;
+    int deltaY = (point.y - _lastMovePoint.y) * sensitivity;
     [_messenger moveMouse:deltaX :deltaY];
   }
   
