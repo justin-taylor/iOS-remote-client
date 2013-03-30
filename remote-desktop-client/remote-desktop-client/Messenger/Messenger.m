@@ -30,6 +30,11 @@
   return [_outgoingSocket open];
 }
 
+- (BOOL)close
+{
+  return [_outgoingSocket close] == 0;
+}
+
 
 
 - (BOOL)sendToSocket:(NSString *)message
@@ -101,6 +106,14 @@
 - (BOOL)sendKeyStroke:(char)key
 {
   NSString *msg = [NSString stringWithFormat:@"k%c", key];
+  return [self sendToSocket:msg];
+}
+
+
+- (BOOL)requestImage:(int)width
+                    :(int)height
+{
+  NSString *msg = [NSString stringWithFormat:@"I/%d/%d", width, height];
   return [self sendToSocket:msg];
 }
 

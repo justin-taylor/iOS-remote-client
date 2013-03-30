@@ -49,6 +49,12 @@ typedef enum
  */
 - (BOOL)setIpAddress:(NSString *)address port:(int)port;
 
+/**
+ Closes the socket connection. The socket cannot be reused until calling
+ setIpAddress:port again to reestablish a connection
+ */
+- (BOOL)close;
+
 
 /**
  Instructs the server to move the mouse
@@ -92,5 +98,6 @@ typedef enum
 - (BOOL)sendKeyStroke:(char)key;
 
 
-
+- (BOOL)requestImage:(int)width
+                    :(int)height;
 @end

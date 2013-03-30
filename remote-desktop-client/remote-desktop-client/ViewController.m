@@ -11,6 +11,9 @@
 #import "SettingsView.h"
 
 
+#import "SocketHandler.h"
+
+
 //Private methods
 @interface ViewController ()
 
@@ -25,6 +28,10 @@
 
   _touchIsDown = false;
   _messenger = [Messenger new];
+  
+  _imageView = [UIImageView new];
+  [_imageView setFrame:self.view.frame];
+  [self.view addSubview:_imageView];
   
   //setup the setting view
   _settingsView = [[SettingsView alloc] init];
@@ -63,7 +70,38 @@
   
   [self.view addSubview:_keyboardField];
   [self.view setBackgroundColor:[UIColor blackColor]];
+  
+  
+  //listen for application state changes
+  [[NSNotificationCenter defaultCenter]
+   addObserver:self
+   selector:@selector(applicationWillEnterForeground)
+   name:UIApplicationWillEnterForegroundNotification
+   object:NULL];
+  
+  [[NSNotificationCenter defaultCenter]
+   addObserver:self
+   selector:@selector(applicationDidEnterBackground)
+   name:UIApplicationDidEnterBackgroundNotification
+   object:NULL];
 }
+
+- (void)applicationWillEnterForeground
+{
+  //reopen the socket
+  [self settingsViewReceivedConnectAction:_settingsView];
+}
+
+
+- (void)applicationDidEnterBackground
+{
+  //close the socket
+  if([_messenger close])
+  {
+    NSLog(@"Socket Closed");
+  }
+}
+
 
 
 
@@ -88,6 +126,7 @@ replacementString:(NSString *)string
   {
     NSLog(@"deleted a char");
   }
+  
   else
   {
     NSLog(@"GOT SOMETHING %@", string);

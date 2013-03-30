@@ -27,6 +27,8 @@
   BOOL _touchIsDown;
   
   UITextField *_keyboardField;
+  
+  UIImageView *_imageView;
 }
 
 

@@ -28,6 +28,18 @@
 
 
 
+/*----------------------------------------------------------------------------*/
+#pragma mark -
+#pragma mark - Socket communication
+/*----------------------------------------------------------------------------*/
+
+- (int)close
+{
+  return shutdown(_sock, 2);
+}
+
+
+
 - (BOOL)open
 {
   if ((_sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0)
@@ -89,9 +101,7 @@
              0,
              (struct sockaddr *) &_destination,
                     sizeof(_destination));
-  
-  NSLog(@"SENT %d", sent);
-  
+    
   if(sent != echolen)
   {
     printf("Mismatch in number of sent bytes\n");
@@ -104,83 +114,49 @@
   }
 }
 
+/*-
+ */
 
-
-
-/*----------------------------------------------------------------------------*/
-#pragma mark -
-#pragma mark - Socket communication
-/*----------------------------------------------------------------------------*/
-
-
-
-+(bool) send:(NSString*) msg ipAddress:(NSString*) ip port:(int) p
++ (int)testReceive:(NSString *)addr
+                   :(int)port
+                   :(void *)output
 {
-  int sock;
-  struct sockaddr_in destination;
-  unsigned int echolen;
-  int broadcast = 1;
-  // if that doesn't work, try this
-  //char broadcast = '1';
+  int sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  struct sockaddr_in sa;
+  //char buffer[1024];
   
-  if (msg == nil || ip == nil)
+  unsigned int fromlen;
+  int recsize;
+  
+  memset(&sa, 0, sizeof(sa));
+  sa.sin_family = AF_INET;
+  sa.sin_addr.s_addr = INADDR_ANY;
+  sa.sin_port = htons(port);
+  
+  // bind the socket to our address
+  if (-1 == bind(sock,(struct sockaddr *)&sa, sizeof(struct sockaddr)))
   {
-    printf("Message and/or ip address is null\n");
-    return false;
+    perror("bind failed");
+    close(sock);
+    exit(EXIT_FAILURE);
   }
   
-  /* Create the UDP socket */
-  if ((sock = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0)
-  {
-    printf("Failed to create socket\n");      return false;
-  }
+    recsize = recvfrom(sock,
+                       (void *)output,
+                       1024,
+                       0,
+                       (struct sockaddr *)&sa,
+                       &fromlen);
   
-  /* Construct the server sockaddr_in structure */
-  memset(&destination, 0, sizeof(destination));
+    if (recsize < 0)
+      fprintf(stderr, "%s\n", strerror(errno));
   
-  /* Clear struct */
-  destination.sin_family = AF_INET;
-  
-  /* Internet/IP */
-  destination.sin_addr.s_addr = inet_addr([ip UTF8String]);
-  
-  /* IP address */
-  destination.sin_port = htons(p);
-  
-  /* server port */
-  setsockopt(sock,
-             IPPROTO_IP,
-             IP_MULTICAST_IF,
-             &destination,
-             sizeof(destination));
-  const char *cmsg = [msg UTF8String];   echolen = strlen(cmsg);
-  
-  // this call is what allows broadcast packets to be sent:
-  if (setsockopt(sock,
-                 SOL_SOCKET,
-                 SO_BROADCAST,
-                 &broadcast,
-                 sizeof broadcast) == -1)
-  {
-    perror("setsockopt (SO_BROADCAST)");
-    exit(1);
-  }
-  if (sendto(sock,
-             cmsg,
-             echolen,
-             0,
-             (struct sockaddr *) &destination,
-             sizeof(destination)) != echolen)
-  {
-    printf("Mismatch in number of sent bytes\n");
-    return false;
-  }
-  else
-  {
-    NSLog(@"-> Tx: %@",msg);
-    return true;
-  }
+  return recsize;
 }
+
+
+
+
 
 
 @end

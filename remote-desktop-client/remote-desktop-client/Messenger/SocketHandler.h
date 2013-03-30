@@ -34,9 +34,12 @@
 
 
 - (BOOL)open;
-
+- (int)close;
 
 - (BOOL)send:(NSString *)message;
 
 
++ (int)testReceive:(NSString *)addr
+                   :(int)port
+                   :(void *)output;
 @end
