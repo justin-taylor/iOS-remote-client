@@ -251,4 +251,15 @@ replacementString:(NSString *)string
 
 
 
+- (void)settingsView:(SettingsView *)view didBecomeVisible:(BOOL)visible
+{
+  if(!visible)
+  {
+    [view commitSettingsToUserDefaults];
+  }
+}
+
+
+
+
 @end

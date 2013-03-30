@@ -42,6 +42,7 @@
     [self.sensitivitySlider setFrame:frame];
     [self.sensitivitySlider setContinuous:TRUE];
     [self.sensitivitySlider setMaximumValue:5.0];
+    [self.sensitivitySlider setMinimumValue:1.0];
     [self.sensitivitySlider addTarget:self
                                action:@selector(sliderValueChanged:)
                      forControlEvents:UIControlEventValueChanged];
@@ -135,20 +136,34 @@
 - (void)setVisible:(BOOL)show
 {
   [UIView animateWithDuration:0.3 animations:^
-   {
-     CGRect frame = self.frame;
-     if(show)
-     {
-       frame.origin.x = 0;
-     }
-     
-     else
-     {
-       frame.origin.x = -320;
-     }
-     
-     [self setFrame:frame];
-   }];
+  {
+    // animate the view
+    float originX;
+    if(show)
+    {
+      originX = 0;
+    }
+    
+    else
+    {
+      originX = -320;
+    }
+    
+    //set the frame
+    CGRect frame = self.frame;
+    frame.origin.x = originX;
+    [self setFrame:frame];
+    
+  }
+   
+  // completion block
+  completion:^(BOOL finished)
+  {
+    // Notify the delegate whether the view is visible
+    CGRect frame = self.frame;
+    [self.delegate settingsView:self
+               didBecomeVisible:frame.origin.x == 0];
+  }];
 }
 
 - (void)pullOutAction:(id)sender
